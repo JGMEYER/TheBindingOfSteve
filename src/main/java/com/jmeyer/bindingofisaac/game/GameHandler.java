@@ -1,5 +1,6 @@
 package com.jmeyer.bindingofisaac.game;
 
+import com.jmeyer.bindingofisaac.entity.EntityIsaac;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.world.WorldServer;
@@ -27,7 +28,7 @@ public class GameHandler {
 			return;
 		}
 
-		isaac = new EntitySkeleton(world);
+        isaac = new EntityIsaac(world);
 		isaac.setLocationAndAngles(0, 5, 0, 0, 0);
 		world.spawnEntityInWorld(isaac);
 	}

@@ -38,7 +38,7 @@ public class PlayerEventHandler {
 		int z = 0;
 		int yaw = 0;
 		int pitch = 90; // facing down
-		
+
 		// Force the player into a fixed position
 		event.player.setLocationAndAngles(x, y, z, yaw, pitch);
 	}

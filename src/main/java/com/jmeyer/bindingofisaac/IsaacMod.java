@@ -21,6 +21,9 @@ public class IsaacMod {
     @SidedProxy(clientSide="com.jmeyer.bindingofisaac.ClientProxy", serverSide="com.jmeyer.bindingofisaac.ServerProxy")
     private static CommonProxy proxy;
     public static SimpleNetworkWrapper network;
+
+    @Mod.Instance(IsaacMod.MODID)
+    static IsaacMod instance;
     
     public static GameHandler game;
     
