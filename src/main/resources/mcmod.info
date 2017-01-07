@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bindingofisaac",
+  "name": "The Binding of Isaac Mod",
+  "description": "Recreates 'The Binding of Isaac' in Minecraft",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["JGMEYER"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
