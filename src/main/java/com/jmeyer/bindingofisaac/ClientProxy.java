@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy {
 	
-	public static Map<Integer, KeyBinding> keyBindings;
+	public static Map<String, KeyBinding> keyBindings;
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
@@ -26,25 +26,28 @@ public class ClientProxy extends CommonProxy {
         
         // Register key bindings
         // TODO fix user needing to unbind any defaults from the menu
-        keyBindings = new HashMap<Integer, KeyBinding>();
+        keyBindings = new HashMap<String, KeyBinding>();
 	    keyBindings.put(
-	    	Keyboard.KEY_W,
-	    	new KeyBinding("key.isaac.up", Keyboard.KEY_W, "key.magicbeans.category")
+                "key.isaac.up",
+                new KeyBinding("key.isaac.up", Keyboard.KEY_UP, "key.magicbeans.category")
 	    );
+        keyBindings.put(
+                "key.isaac.down",
+                new KeyBinding("key.isaac.down", Keyboard.KEY_DOWN, "key.magicbeans.category")
+        );
 	    keyBindings.put(
-    		Keyboard.KEY_A,
-    		new KeyBinding("key.isaac.left", Keyboard.KEY_A, "key.magicbeans.category")
+                "key.isaac.left",
+                new KeyBinding("key.isaac.left", Keyboard.KEY_LEFT, "key.magicbeans.category")
     	);
 	    keyBindings.put(
-    		Keyboard.KEY_S,
-    		new KeyBinding("key.isaac.down", Keyboard.KEY_S, "key.magicbeans.category")
+                "key.isaac.right",
+                new KeyBinding("key.isaac.right", Keyboard.KEY_RIGHT, "key.magicbeans.category")
 	    );
 	    keyBindings.put(
-    		Keyboard.KEY_D,
-    		new KeyBinding("key.isaac.right", Keyboard.KEY_D, "key.magicbeans.category")
-	    );
+	            "key.camera.toggle",
+                new KeyBinding("key.camera.toggle", Keyboard.KEY_C, "key.magicbeans.category")
+        );
 	    
-	    System.out.println("Registering keybindings");
 	    for (KeyBinding keyBinding : keyBindings.values()) {
 	    	System.out.println(keyBinding);
 	        ClientRegistry.registerKeyBinding(keyBinding);

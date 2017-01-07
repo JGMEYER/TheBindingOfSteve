@@ -1,6 +1,7 @@
 package com.jmeyer.bindingofisaac;
 
 import com.jmeyer.bindingofisaac.command.CommandIsaacStart;
+import com.jmeyer.bindingofisaac.entity.EntityCamera;
 import com.jmeyer.bindingofisaac.entity.EntityIsaac;
 import com.jmeyer.bindingofisaac.event.KeyEventHandler;
 import com.jmeyer.bindingofisaac.event.PlayerEventHandler;
@@ -16,10 +17,12 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class CommonProxy {
 
     private static final ResourceLocation entityIsaac = new ResourceLocation(IsaacMod.MODID, "EntityIsaac");
+    private static final ResourceLocation entityCamera = new ResourceLocation(IsaacMod.MODID, "EntityCamera");
 
     public void preInit(FMLPreInitializationEvent e) {
         // Entities
-        EntityRegistry.registerModEntity(entityIsaac, EntityIsaac.class, entityIsaac.toString(), 1, IsaacMod.instance, 17, 3, false);
+        EntityRegistry.registerModEntity(entityIsaac, EntityIsaac.class, entityIsaac.toString(), 1, IsaacMod.instance, 17, 1, false);
+        EntityRegistry.registerModEntity(entityCamera, EntityCamera.class, entityCamera.toString(), 1, IsaacMod.instance, 17, 10, false);
     }
 
     public void init(FMLInitializationEvent e) {
