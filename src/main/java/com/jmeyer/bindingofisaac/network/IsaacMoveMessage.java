@@ -12,14 +12,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class IsaacMoveMessage implements IMessage {
-	
-	private String text;
+
+    private String text;
 
     /* ===== Used internally ===== */
-	public IsaacMoveMessage() { }
+    public IsaacMoveMessage() { }
 
     public IsaacMoveMessage(double vx, double vz, double shoot_vx, double shoot_vz) {
-    	this.text = textJoin(vx, vz, shoot_vx, shoot_vz);
+        this.text = textJoin(vx, vz, shoot_vx, shoot_vz);
     }
 
     @Override
@@ -33,33 +33,33 @@ public class IsaacMoveMessage implements IMessage {
     }
     
     private static String textJoin(double vx, double vz, double shoot_vx, double shoot_vz) {
-    	return String.format("%f:%f:%f:%f", vx, vz, shoot_vx, shoot_vz);
+        return String.format("%f:%f:%f:%f", vx, vz, shoot_vx, shoot_vz);
     }
     
     private static double[] textSplit(String text) {
-    	String[] split = text.split(":");
-    	double[] velocity = new double[split.length];
-    	for (int i = 0; i < split.length; i++) {
-    		velocity[i] = Double.parseDouble(split[i]);
-    	}
-    	return velocity;
+        String[] split = text.split(":");
+        double[] velocity = new double[split.length];
+        for (int i = 0; i < split.length; i++) {
+            velocity[i] = Double.parseDouble(split[i]);
+        }
+        return velocity;
     }
 
     public static class Handler implements IMessageHandler<IsaacMoveMessage, IMessage> {
-    	
+
         @Override
         public IMessage onMessage(final IsaacMoveMessage message, final MessageContext ctx) {
             IThreadListener mainThread = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
             mainThread.addScheduledTask(new Runnable() {
                 @Override
                 public void run() {
-                	double[] values = textSplit(message.text);
-                	double vx, vz, shoot_vx, shoot_vz;
+                    double[] values = textSplit(message.text);
+                    double vx, vz, shoot_vx, shoot_vz;
 
-                	vx = values[0];
-                	vz = values[1];
-                	shoot_vx = values[2];
-                	shoot_vz = values[3];
+                    vx = values[0];
+                    vz = values[1];
+                    shoot_vx = values[2];
+                    shoot_vz = values[3];
 
                     if (vx != 0 || vz != 0) {
                         IsaacMod.game.isaac.move(vx, vz);

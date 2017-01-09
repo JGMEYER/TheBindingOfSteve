@@ -14,14 +14,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
  * @author justian
  */
 public class PlayerEventHandler {
-	
-	@SubscribeEvent
-	public void onEntityGetHurt(LivingHurtEvent event) {
-		// Make player invincible
-	    if (event.getEntity() instanceof EntityPlayer) {
-	        event.setCanceled(true);
-	    }
-	}
+
+    @SubscribeEvent
+    public void onEntityGetHurt(LivingHurtEvent event) {
+        // Make player invincible
+        if (event.getEntity() instanceof EntityPlayer) {
+            event.setCanceled(true);
+        }
+    }
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event){
@@ -31,22 +31,22 @@ public class PlayerEventHandler {
         }
     }
 
-	@SubscribeEvent
-	public void onPlayerTick(PlayerTickEvent event) {
+    @SubscribeEvent
+    public void onPlayerTick(PlayerTickEvent event) {
         //TODO the player will eventually need to move with the camera to ensure entities continue to render
-		// Force the player high above the game
-    	if (IsaacMod.game.cameraEnabled()) {
-			double x, y, z;
-			float yaw, pitch;
+        // Force the player high above the game
+        if (IsaacMod.game.cameraEnabled()) {
+            double x, y, z;
+            float yaw, pitch;
 
-			x = event.player.posX;
-			y = 15;
-			z = event.player.posZ;
-			yaw = event.player.cameraYaw;
-			pitch = event.player.cameraPitch;
+            x = event.player.posX;
+            y = 15;
+            z = event.player.posZ;
+            yaw = event.player.cameraYaw;
+            pitch = event.player.cameraPitch;
 
-			event.player.setLocationAndAngles(x, y, z, yaw, pitch);
-		}
-	}
-	
+            event.player.setLocationAndAngles(x, y, z, yaw, pitch);
+        }
+    }
+
 }

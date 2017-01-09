@@ -52,13 +52,13 @@ public class KeyEventHandler {
         double shoot_vx = 0;
         double shoot_vz = 0;
 
-	    /*  ===========================
-	     *  NORTH: -z, yaw: 180/-180
-	     *  SOUTH: +z, yaw: 0
-	     *  EAST:  +x, yaw: -90
-	     *  WEST:  -x, yaw: 90
-	     *  ===========================
-	     */
+        /*  ===========================
+         *  NORTH: -z, yaw: 180/-180
+         *  SOUTH: +z, yaw: 0
+         *  EAST:  +x, yaw: -90
+         *  WEST:  -x, yaw: 90
+         *  ===========================
+         */
         // TODO this check is unclear, should check for when game mode is active
         if (IsaacMod.game.cameraEnabled()) {
             if (isaacNorthDown) {
@@ -96,10 +96,10 @@ public class KeyEventHandler {
             IsaacMod.network.sendToServer(new IsaacMoveMessage(vx, vz, shoot_vx, shoot_vz));
         }
     }
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onKeyInputEvent(KeyInputEvent event) {
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+    public void onKeyInputEvent(KeyInputEvent event) {
         Map<String, KeyBinding> keyBindings = ClientProxy.keyBindings;
         IsaacShootKey latestShootKey;
 
@@ -152,18 +152,18 @@ public class KeyEventHandler {
         /* ===== Game controls ===== */
 
         if (keyBindings.get("key.game.start").isPressed()) {
-	        IsaacMod.network.sendToServer(new GameStartMessage());
+            IsaacMod.network.sendToServer(new GameStartMessage());
         }
 
-	    /* ===== Camera controls ===== */
+        /* ===== Camera controls ===== */
 
-		if (keyBindings.get("key.camera.toggle").isPressed()) {
-	        IsaacMod.game.toggleCamera();
-		}
-	}
+        if (keyBindings.get("key.camera.toggle").isPressed()) {
+            IsaacMod.game.toggleCamera();
+        }
+    }
 
-	/**
-	 * Used as a stack of key events to track the latest key pressed, but does
+    /**
+     * Used as a stack of key events to track the latest key pressed, but does
      * not allow a duplicate event to be added. This helps ensure that new
      * key presses are intuitive to the user when holding multiple keys.
      *
@@ -174,8 +174,8 @@ public class KeyEventHandler {
      * time: 3  keys_down: right, down      latest: down
      * time: 4  keys_down: right            latest: right
      * time: 5  keys_down: right, up        latest: up (different from time=1)
-	 */
-	private class UniqueStack<E> extends ArrayDeque<E> {
+     */
+    private class UniqueStack<E> extends ArrayDeque<E> {
 
         public UniqueStack() { super(); }
 

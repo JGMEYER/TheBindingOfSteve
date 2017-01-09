@@ -12,8 +12,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy {
-	
-	public static Map<String, KeyBinding> keyBindings;
+
+    public static Map<String, KeyBinding> keyBindings;
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {

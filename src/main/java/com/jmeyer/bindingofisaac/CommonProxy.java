@@ -30,17 +30,17 @@ public class CommonProxy {
     }
 
     public void init(FMLInitializationEvent e) {
-    	// Shared command handlers
-    	ClientCommandHandler.instance.registerCommand(new CommandIsaacStart());
+        // Shared command handlers
+        ClientCommandHandler.instance.registerCommand(new CommandIsaacStart());
 
         // Shared event handlers
-    	KeyEventHandler keyEventHandler = new KeyEventHandler();
-    	PlayerEventHandler playerEventHandler = new PlayerEventHandler();
-    	MinecraftForge.EVENT_BUS.register(keyEventHandler);
-    	MinecraftForge.EVENT_BUS.register(playerEventHandler);
+        KeyEventHandler keyEventHandler = new KeyEventHandler();
+        PlayerEventHandler playerEventHandler = new PlayerEventHandler();
+        MinecraftForge.EVENT_BUS.register(keyEventHandler);
+        MinecraftForge.EVENT_BUS.register(playerEventHandler);
     }
 
     public void postInit(FMLPostInitializationEvent e) {
-    	// empty
+        // empty
     }
 }
