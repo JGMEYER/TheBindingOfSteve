@@ -43,7 +43,7 @@ public class EntityCamera extends Entity {
         worldObj.spawnEntityInWorld(this);
 
         setPosition(0, 15, 0);
-        setRotation(0, 90);
+        setRotation(180, 90); // Facing NORTH, DOWN
     }
 
     public void stop() {

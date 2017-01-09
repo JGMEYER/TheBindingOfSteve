@@ -3,7 +3,6 @@ package com.jmeyer.bindingofisaac.game;
 import com.jmeyer.bindingofisaac.entity.EntityCamera;
 import com.jmeyer.bindingofisaac.entity.EntityIsaac;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -11,9 +10,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GameHandler {
 	
 	private boolean isRunning;
+	private int fireRate = 5;
+	private float fireSpeed = 1;
 	private double movementMultiplier = 0.25;
 	
-	public Entity isaac;
+	public EntityIsaac isaac;
 
     @SideOnly(Side.CLIENT)
 	private EntityCamera camera;
@@ -49,6 +50,14 @@ public class GameHandler {
             camera = new EntityCamera(world);
             camera.start();
         }
+	}
+
+	public int getFireRate() {
+	    return fireRate;
+	}
+
+	public float getFireSpeed() {
+	    return fireSpeed;
 	}
 
 	public double getMovementMultiplier() {

@@ -1,6 +1,7 @@
 package com.jmeyer.bindingofisaac;
 
 import com.jmeyer.bindingofisaac.game.GameHandler;
+import com.jmeyer.bindingofisaac.network.GameStartMessage;
 import com.jmeyer.bindingofisaac.network.IsaacMoveMessage;
 
 import net.minecraftforge.fml.common.Mod;
@@ -32,8 +33,10 @@ public class IsaacMod {
         proxy.preInit(e);
         
         // Configure network elements
+        int messageID = 0;
         network = NetworkRegistry.INSTANCE.newSimpleChannel("BOIChannel");
-        network.registerMessage(IsaacMoveMessage.Handler.class, IsaacMoveMessage.class, 0, Side.SERVER);
+        network.registerMessage(GameStartMessage.Handler.class, GameStartMessage.class, messageID++, Side.SERVER);
+        network.registerMessage(IsaacMoveMessage.Handler.class, IsaacMoveMessage.class, messageID++, Side.SERVER);
     }
 
     @EventHandler

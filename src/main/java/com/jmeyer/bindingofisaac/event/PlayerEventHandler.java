@@ -2,15 +2,11 @@ package com.jmeyer.bindingofisaac.event;
 
 import com.jmeyer.bindingofisaac.IsaacMod;
 import com.jmeyer.bindingofisaac.entity.EntityCamera;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * The game runs independently of the player. Keep the player out of the
@@ -37,6 +33,7 @@ public class PlayerEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerTick(PlayerTickEvent event) {
+        //TODO the player will eventually need to move with the camera to ensure entities continue to render
 		// Force the player high above the game
     	if (IsaacMod.game.cameraEnabled()) {
 			double x, y, z;

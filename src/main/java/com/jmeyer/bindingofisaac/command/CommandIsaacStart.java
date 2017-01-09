@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jmeyer.bindingofisaac.IsaacMod;
+import com.jmeyer.bindingofisaac.network.GameStartMessage;
 import com.jmeyer.bindingofisaac.network.IsaacMoveMessage;
 
 import net.minecraft.command.CommandException;
@@ -46,7 +47,7 @@ public class CommandIsaacStart implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		System.out.println("CommmandIsaacStart");
 		if(sender instanceof EntityPlayer) {
-			IsaacMod.network.sendToServer(new IsaacMoveMessage(0.1, 0.1));
+			IsaacMod.network.sendToServer(new GameStartMessage());
 		}
 	}
 
