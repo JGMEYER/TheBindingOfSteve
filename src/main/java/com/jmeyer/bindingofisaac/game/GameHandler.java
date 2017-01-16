@@ -2,6 +2,7 @@ package com.jmeyer.bindingofisaac.game;
 
 import com.jmeyer.bindingofisaac.entity.EntityCamera;
 import com.jmeyer.bindingofisaac.entity.EntityIsaac;
+import com.jmeyer.bindingofisaac.structures.Basement;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,6 +34,11 @@ public class GameHandler {
 
         // a hack for testing
         world.setWorldTime(0);
+
+        // basement generation example
+        Basement basement = new Basement(9);
+        basement.generate(5);
+        System.out.println(basement);
 
         // is this necessary?
         for (Entity entity : world.loadedEntityList) {

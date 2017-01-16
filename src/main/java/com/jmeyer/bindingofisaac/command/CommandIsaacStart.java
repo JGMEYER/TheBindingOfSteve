@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.jmeyer.bindingofisaac.IsaacMod;
 import com.jmeyer.bindingofisaac.network.GameStartMessage;
-import com.jmeyer.bindingofisaac.network.IsaacMoveMessage;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -19,7 +18,7 @@ public class CommandIsaacStart implements ICommand {
     private final List<String> aliases;
 
     public CommandIsaacStart() {
-        aliases = new ArrayList<String>();
+        aliases = new ArrayList<>();
         aliases.add("isaac_start");
     }
 

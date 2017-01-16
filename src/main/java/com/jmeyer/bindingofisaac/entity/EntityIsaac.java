@@ -29,7 +29,6 @@ public class EntityIsaac extends EntityLiving {
         }
         EntityIsaacTear tear = new EntityIsaacTear(this.worldObj, this);
 
-        //TODO handle delay by direction?
         //TODO orient Isaac in direction of fire (overwrites direction from move())
         //TODO make EntityIsaacTear a basic extension of Snowball and register event to cancel collision with Isaac
 
