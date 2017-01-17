@@ -1,5 +1,9 @@
 package com.jmeyer.bindingofisaac.structures;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+
 import java.util.EnumSet;
 
 public class BasementRoom {
@@ -10,43 +14,35 @@ public class BasementRoom {
     private BasementRoomType roomType;
     private boolean generated;
 
-    protected EnumSet<Direction> doors;
+    protected EnumSet<EnumFacing> doors;
+
+    // Includes wall widths
+    public static final int ROOM_WIDTH = 19;
+    public static final int ROOM_LENGTH = 11;
+    public static final int ROOM_HEIGHT = 5;
 
     public enum BasementRoomType {
-        EMPTY(0, ' '),
-        START(1, '⍟'),
-        NORMAL(2, ' '),
-        BOSS(3, '☠'),
-        DEVIL(4, '✟'),
-        TREASURE(5, '$');
+        EMPTY(0, ' ', Blocks.AIR),
+        START(1, '⍟', Blocks.BRICK_BLOCK),
+        NORMAL(2, ' ', Blocks.BRICK_BLOCK),
+        BOSS(3, '☠', Blocks.COBBLESTONE_WALL),
+        DEVIL(4, '✟', Blocks.OBSIDIAN),
+        TREASURE(5, '$', Blocks.GOLD_BLOCK);
 
         private final int index;
         private final char symbol;
+        private final Block block;
 
-        BasementRoomType(int indexIn, char symbolIn) {
+        BasementRoomType(int indexIn, char symbolIn, Block blockIn) {
             index = indexIn;
             symbol = symbolIn;
+            block = blockIn;
         }
+
+        public Block getBlock() { return block; }
 
         public char getSymbol() {
             return symbol;
-        }
-    }
-
-    public enum Direction {
-        NORTH(0),
-        SOUTH(1),
-        WEST(2),
-        EAST(3);
-
-        private final int index;
-
-        Direction(int indexIn) {
-            index = indexIn;
-        }
-
-        public int getIndex() {
-            return index;
         }
     }
 
@@ -60,11 +56,23 @@ public class BasementRoom {
         roomType = roomTypeIn;
         parentRoom = parentRoomIn;
 
-        doors = EnumSet.noneOf(Direction.class);
+        doors = EnumSet.noneOf(EnumFacing.class);
     }
 
-    public void addDoor(Direction dir) {
-        doors.add(dir);
+    public void addDoor(EnumFacing facing) {
+        doors.add(facing);
+    }
+
+    public EnumSet<EnumFacing> getDoors() {
+        return doors;
+    }
+
+    public int getLocationX() {
+        return locationX;
+    }
+
+    public int getLocationY() {
+        return locationY;
     }
 
     public BasementRoomType getRoomType() {
@@ -76,7 +84,7 @@ public class BasementRoom {
         this.roomType = roomType;
     }
 
-    public boolean isTypeEmpty() {
+    public boolean isEmptyType() {
         return (roomType == BasementRoomType.EMPTY);
     }
 
@@ -91,10 +99,10 @@ public class BasementRoom {
            return new String[] { "   ", "   ", "   " };
        }
 
-       char northDoor = (doors.contains(Direction.NORTH)) ? ' ' : '═';
-       char southDoor = (doors.contains(Direction.SOUTH)) ? ' ' : '═';
-       char westDoor = (doors.contains(Direction.WEST)) ? ' ' : '║';
-       char eastDoor = (doors.contains(Direction.EAST)) ? ' ' : '║';
+       char northDoor = (doors.contains(EnumFacing.NORTH)) ? ' ' : '═';
+       char southDoor = (doors.contains(EnumFacing.SOUTH)) ? ' ' : '═';
+       char westDoor = (doors.contains(EnumFacing.WEST)) ? ' ' : '║';
+       char eastDoor = (doors.contains(EnumFacing.EAST)) ? ' ' : '║';
 
        char decorator = roomType.getSymbol();
 

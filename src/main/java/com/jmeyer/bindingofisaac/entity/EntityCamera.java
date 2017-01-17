@@ -1,5 +1,6 @@
 package com.jmeyer.bindingofisaac.entity;
 
+import com.jmeyer.bindingofisaac.structures.BasementRoom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,6 +12,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * Third person camera. Adapted from mwerschy's and jasonpaulos's ArrowCam mods.
  */
 public class EntityCamera extends Entity {
+
+    private static final int CAMERA_HEIGHT = 8;
 
     private static EntityCamera instance;
     private boolean enabled;
@@ -42,13 +45,12 @@ public class EntityCamera extends Entity {
         enabled = true;
         worldObj.spawnEntityInWorld(this);
 
-        setPosition(0, 15, 0);
+        setPosition(0, CAMERA_HEIGHT, 0);
         setRotation(180, 90); // Facing NORTH, DOWN
     }
 
     public void stop() {
         Minecraft mc = Minecraft.getMinecraft();
-        if (worldObj != null) worldObj.removeEntity(this);
 
         if (!enabled) return;
         enabled = false;
@@ -60,16 +62,29 @@ public class EntityCamera extends Entity {
         mc.getRenderManager().renderViewEntity = mc.thePlayer;
     }
 
-    public void toggle() {
-        if (enabled) {
-            stop();
-        } else {
-            start();
-        }
+    public void moveToRoom(int roomX, int roomY) {
+        double posX, posZ;
+        posX = roomX * BasementRoom.ROOM_WIDTH + BasementRoom.ROOM_WIDTH / 2 + 0.5;
+        posZ = roomY * BasementRoom.ROOM_LENGTH + BasementRoom.ROOM_LENGTH / 2 + 0.5;
+        setPosition(posX, CAMERA_HEIGHT, posZ);
     }
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public void onEntityUpdate() {
+        super.onEntityUpdate();
+        if (enabled) {
+            Minecraft mc = Minecraft.getMinecraft();
+            mc.thePlayer.setPositionAndRotation(posX, 15, posZ, 180, 90);
+        }
+    }
+
+    @Override
+    public boolean hasNoGravity() {
+        return true;
     }
 
     @Override

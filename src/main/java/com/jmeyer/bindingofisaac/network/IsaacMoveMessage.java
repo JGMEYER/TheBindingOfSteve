@@ -22,11 +22,13 @@ public class IsaacMoveMessage implements IMessage {
         this.text = textJoin(vx, vz, shoot_vx, shoot_vz);
     }
 
+    //TODO use buf.readDouble() and remove textSplit()
     @Override
     public void fromBytes(ByteBuf buf) {
         text = ByteBufUtils.readUTF8String(buf);
     }
 
+    //TODO use buf.writeDouble() and remove textJoin()
     @Override
     public void toBytes(ByteBuf buf) {
         ByteBufUtils.writeUTF8String(buf, text);

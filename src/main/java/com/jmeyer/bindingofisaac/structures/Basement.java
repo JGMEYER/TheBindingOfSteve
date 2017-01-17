@@ -1,5 +1,8 @@
 package com.jmeyer.bindingofisaac.structures;
 
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -24,6 +27,37 @@ public class Basement {
         }
     }
 
+    public int getGridSize() {
+        return gridSize;
+    }
+
+    public BasementRoom getRoom(int roomX, int roomY) {
+        assert generated;
+        // Out of bounds
+        if (roomX < 0 || roomX >= gridSize || roomY < 0 || roomY >= gridSize) {
+            return null;
+        }
+        return grid[roomY][roomX];
+    }
+
+    public int getStartX() {
+        return gridSize / 2;
+    }
+
+    public int getStartY() {
+        return gridSize / 2;
+    }
+
+    public BlockPos getRoomCenter(int roomX, int roomY) {
+        int posX = roomX * BasementRoom.ROOM_WIDTH + BasementRoom.ROOM_WIDTH / 2;
+        int posZ = roomY * BasementRoom.ROOM_LENGTH + BasementRoom.ROOM_LENGTH / 2;
+        return new BlockPos(posX, 4, posZ);
+    }
+
+    public boolean isGenerated() {
+        return generated;
+    }
+
     public void generate(int numRooms) {
         assert !generated;
         assert numRooms < gridSize * gridSize;
@@ -45,7 +79,7 @@ public class Basement {
     private List<Point> generateNormalRooms(int numRooms) {
         ArrayList<Point> frontier = new ArrayList<>();
         ArrayList<Point> visited = new ArrayList<>();
-        Point start = new Point(gridSize/2, gridSize/2);
+        Point start = new Point(getStartX(), getStartY());
 
         frontier.add(start);
         while (numRooms > 0) {
@@ -64,7 +98,7 @@ public class Basement {
             grid[cur.y][cur.x].setRoomType(roomType);
             numRooms--;
 
-            Map<BasementRoom.Direction, Point> neighbors = getNeighbors(cur, false);
+            Map<EnumFacing, Point> neighbors = getNeighbors(cur, false);
             for (Point neighbor : neighbors.values()) {
                 if (!visited.contains(neighbor) && !frontier.contains(neighbor)) {
                     frontier.add(neighbor);
@@ -81,7 +115,7 @@ public class Basement {
             // Prune candidates without exactly 1 neighbor
             for (Iterator<Point> iterator = frontier.iterator(); iterator.hasNext(); ) {
                 Point point = iterator.next();
-                Map<BasementRoom.Direction, Point> neighbors = getNeighbors(point, true);
+                Map<EnumFacing, Point> neighbors = getNeighbors(point, true);
                 if (neighbors.size() != 1) {
                     iterator.remove();
                 }
@@ -99,47 +133,47 @@ public class Basement {
 
     private void generateDoors() {
         BasementRoom cur;
-        Map<BasementRoom.Direction, Point> neighbors;
+        Map<EnumFacing, Point> neighbors;
 
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
                 cur = grid[y][x];
                 neighbors = getNeighbors(new Point(x, y), true);
 
-                for (BasementRoom.Direction dir : neighbors.keySet()) {
-                    cur.addDoor(dir);
+                for (EnumFacing facing : neighbors.keySet()) {
+                    cur.addDoor(facing);
                 }
             }
         }
     }
 
-    private Map<BasementRoom.Direction, Point> getNeighbors(Point point, boolean excludeEmpty) {
+    private Map<EnumFacing, Point> getNeighbors(Point point, boolean excludeEmpty) {
         int pX = point.x;
         int pY = point.y;
-        Map<BasementRoom.Direction, Point> neighbors = new HashMap<>();
+        Map<EnumFacing, Point> neighbors = new HashMap<>();
 
         // NORTH
         if (pY > 0) {
-            if (!excludeEmpty || !grid[pY-1][pX].isTypeEmpty()) {
-                neighbors.put(BasementRoom.Direction.NORTH, new Point(pX, pY - 1));
+            if (!excludeEmpty || !grid[pY-1][pX].isEmptyType()) {
+                neighbors.put(EnumFacing.NORTH, new Point(pX, pY - 1));
             }
         }
         // SOUTH
         if (pY < (gridSize - 1)) {
-            if (!excludeEmpty || !grid[pY+1][pX].isTypeEmpty()) {
-                neighbors.put(BasementRoom.Direction.SOUTH, new Point(pX, pY + 1));
+            if (!excludeEmpty || !grid[pY+1][pX].isEmptyType()) {
+                neighbors.put(EnumFacing.SOUTH, new Point(pX, pY + 1));
             }
         }
         // WEST
         if (pX > 0) {
-            if (!excludeEmpty || !grid[pY][pX-1].isTypeEmpty()) {
-                neighbors.put(BasementRoom.Direction.WEST, new Point(pX - 1, pY));
+            if (!excludeEmpty || !grid[pY][pX-1].isEmptyType()) {
+                neighbors.put(EnumFacing.WEST, new Point(pX - 1, pY));
             }
         }
         // EAST
         if (pX < (gridSize - 1)) {
-            if (!excludeEmpty || !grid[pY][pX+1].isTypeEmpty()) {
-                neighbors.put(BasementRoom.Direction.EAST, new Point(pX + 1, pY));
+            if (!excludeEmpty || !grid[pY][pX+1].isEmptyType()) {
+                neighbors.put(EnumFacing.EAST, new Point(pX + 1, pY));
             }
         }
 

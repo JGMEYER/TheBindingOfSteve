@@ -55,8 +55,8 @@ public class KeyEventHandler {
         /*  ===========================
          *  NORTH: -z, yaw: 180/-180
          *  SOUTH: +z, yaw: 0
-         *  EAST:  +x, yaw: -90
          *  WEST:  -x, yaw: 90
+         *  EAST:  +x, yaw: -90
          *  ===========================
          */
         // TODO this check is unclear, should check for when game mode is active

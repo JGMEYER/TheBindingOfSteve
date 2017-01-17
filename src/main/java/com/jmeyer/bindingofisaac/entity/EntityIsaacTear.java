@@ -1,5 +1,6 @@
 package com.jmeyer.bindingofisaac.entity;
 
+import com.jmeyer.bindingofisaac.IsaacMod;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.projectile.EntitySnowball;
@@ -22,17 +23,13 @@ public class EntityIsaacTear extends EntitySnowball {
      */
     protected void onImpact(RayTraceResult result) {
         if (result.entityHit != null) {
-            int i = 0;
-
-            if (result.entityHit instanceof EntityBlaze) {
-                i = 3;
-            }
-            else if (result.entityHit instanceof EntityIsaac) {
-                // Don't allow tears to harm Isaac
+            // Don't allow tears to harm Isaac
+            if (result.entityHit instanceof EntityIsaac) {
                 return;
             }
 
-            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)i);
+            float i = 1 * IsaacMod.game.getDamageMultiplier();
+            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), i);
         }
 
         if (!this.worldObj.isRemote) {

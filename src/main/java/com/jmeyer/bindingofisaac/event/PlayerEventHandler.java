@@ -2,7 +2,10 @@ package com.jmeyer.bindingofisaac.event;
 
 import com.jmeyer.bindingofisaac.IsaacMod;
 import com.jmeyer.bindingofisaac.entity.EntityCamera;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,24 +31,6 @@ public class PlayerEventHandler {
         // Prevent player from interacting with camera
         if(event.getTarget() instanceof EntityCamera){
             event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerTick(PlayerTickEvent event) {
-        //TODO the player will eventually need to move with the camera to ensure entities continue to render
-        // Force the player high above the game
-        if (IsaacMod.game.cameraEnabled()) {
-            double x, y, z;
-            float yaw, pitch;
-
-            x = event.player.posX;
-            y = 15;
-            z = event.player.posZ;
-            yaw = event.player.cameraYaw;
-            pitch = event.player.cameraPitch;
-
-            event.player.setLocationAndAngles(x, y, z, yaw, pitch);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.jmeyer.bindingofisaac.entity;
 
 import com.jmeyer.bindingofisaac.IsaacMod;
+import com.jmeyer.bindingofisaac.structures.BasementRoom;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.world.World;
@@ -11,7 +12,7 @@ public class EntityIsaac extends EntityLiving {
 
     public EntityIsaac(World worldIn) {
         super(worldIn);
-        this.setSize(0.6F, 1.99F); // EntitySkeleton proportions
+        this.setSize(0.5F, 1F); // EntitySkeleton proportions
     }
 
     public void move(double vx, double vz) {
@@ -19,8 +20,7 @@ public class EntityIsaac extends EntityLiving {
         vz *= IsaacMod.game.getMovementMultiplier();
 
         //TODO orient Isaac in direction of movement
-
-        this.setVelocity(vx, 0, vz);
+        setVelocity(vx, 0, vz);
     }
 
     public void shoot(double vx, double vz) {
@@ -30,11 +30,10 @@ public class EntityIsaac extends EntityLiving {
         EntityIsaacTear tear = new EntityIsaacTear(this.worldObj, this);
 
         //TODO orient Isaac in direction of fire (overwrites direction from move())
-        //TODO make EntityIsaacTear a basic extension of Snowball and register event to cancel collision with Isaac
 
         tear.setThrowableHeading(vx, 0, vz, IsaacMod.game.getFireSpeed(), 0F);
-        this.playSound(SoundEvents.ENTITY_SNOWBALL_THROW, 1.0F, 1.0F);
-        this.worldObj.spawnEntityInWorld(tear);
+        playSound(SoundEvents.ENTITY_SNOWBALL_THROW, 1.0F, 1.0F);
+        worldObj.spawnEntityInWorld(tear);
 
         shootDelay = IsaacMod.game.getFireRate();
     }
@@ -42,6 +41,11 @@ public class EntityIsaac extends EntityLiving {
     @Override
     public void onEntityUpdate() {
        super.onEntityUpdate();
+
+       //TODO Isaac really shouldn't have context on the camera
+       int roomX = (int) (posX / BasementRoom.ROOM_WIDTH);
+       int roomY = (int) (posZ / BasementRoom.ROOM_LENGTH);
+       IsaacMod.game.moveCameraToRoom(roomX, roomY);
 
        if (shootDelay > 0) {
            shootDelay--;
